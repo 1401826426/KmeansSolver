@@ -5,6 +5,6 @@ import java.util.List ;
 /**
  * Created by pengfei on 2017/4/16.
  */
-public interface Solver {
+public interface ClusterSolver {
      void solve(List<Cluster> clusters) ;
 }
