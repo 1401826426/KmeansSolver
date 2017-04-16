@@ -1,1 +1,7 @@
 /target/
+.idea/
+.setting/
+.calsspath
+.project
+*.iml
+

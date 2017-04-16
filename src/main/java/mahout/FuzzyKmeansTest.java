@@ -30,6 +30,7 @@ public class FuzzyKmeansTest {
 //        FuzzyKMeansDriver.run(directoryContainingConvertedInput, new Path(canopyOutput, "clusters-0-final"), output,
 //                convergenceDelta, maxIterations, fuzziness, true, true, 0.0, false);
         KMeansDriver.run(directoryContainingConvertedInput,new Path(canopyOutput, "clusters-0-final"),output,0.01,10,true,0.01,false);
+//        KMeansDriver.run();
         ClusterDumper clusterDumper = new ClusterDumper(new Path(output, "clusters-*-final"), new Path(output, "clusteredPoints"));
         System.out.println("points num:   " +  clusterDumper.getClusterIdToPoints().size()) ;
         System.out.println("maxPoints:  " + clusterDumper.getMaxPointsPerCluster()) ;

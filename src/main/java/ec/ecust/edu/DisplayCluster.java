@@ -22,9 +22,6 @@ import java.util.List ;
 public class DisplayCluster {
 
     private static final Logger log = LoggerFactory.getLogger(DisplayCluster.class) ;
-
-
-
     public static List<Cluster> loadClustersWritable(Path output) throws IOException {
         Configuration conf = new Configuration() ;
         FileSystem fs = FileSystem.get(output.toUri() , conf) ;
