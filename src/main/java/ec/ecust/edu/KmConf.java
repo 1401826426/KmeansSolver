@@ -1,5 +1,6 @@
 package ec.ecust.edu;
 
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,7 @@ import java.util.Properties;
 /**
  * Created by pengfei on 2017/4/13.
  */
+@Data
 public class KmConf {
 
     private static final Logger log = LoggerFactory.getLogger(KmConf.class) ;
@@ -50,8 +52,6 @@ public class KmConf {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

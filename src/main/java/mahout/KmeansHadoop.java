@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.mahout.clustering.classify.WeightedVectorWritable;
 import org.apache.mahout.clustering.conversion.InputDriver;
+import org.apache.mahout.clustering.fuzzykmeans.FuzzyKMeansDriver;
 import org.apache.mahout.clustering.kmeans.KMeansDriver;
 import org.apache.mahout.clustering.kmeans.RandomSeedGenerator;
 import org.apache.mahout.common.distance.DistanceMeasure;
@@ -36,6 +37,7 @@ public class KmeansHadoop {
         DistanceMeasure measure = new EuclideanDistanceMeasure();
         clustersSeeds = RandomSeedGenerator.buildRandom(conf,seqFile,clustersSeeds, k, measure);
         KMeansDriver.run(new Path(inPath),seqFile,clustersSeeds,0.01,10,true,0.01,false);
+//        FuzzyKMeansDriver
         Path outGlobPath = new Path(outPath, "clusters-*-final");
         Path clusteredPointsPath = new Path(clusteredPoints);
         System.out.printf("Dumping out clusters from clusters: %s and clusteredPoints: %s\n", outGlobPath, clusteredPointsPath);
