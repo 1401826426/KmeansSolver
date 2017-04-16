@@ -52,8 +52,9 @@ public class KMeansManager {
         return seqFile ;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, IOException{
         KMeansManager kmm = new KMeansManager(new KmConf() , new MysqlClusterSolver()) ;
+        kmm.run(); 
     }
 }
 

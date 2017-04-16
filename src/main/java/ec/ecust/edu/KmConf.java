@@ -52,8 +52,57 @@ public class KmConf {
 
     public static void main(String[] args){
         KmConf kmConf = new KmConf() ;
-        System.out.println(kmConf.getClassification()) ;
+//        System.out.println(kmConf.getClassification()) ;
     }
+
+	public String getHdfs() {
+		return hdfs;
+	}
+
+	public void setHdfs(String hdfs) {
+		this.hdfs = hdfs;
+	}
+
+	public String getInpath() {
+		return inpath;
+	}
+
+	public void setInpath(String inpath) {
+		this.inpath = inpath;
+	}
+
+	public String getOutpath() {
+		return outpath;
+	}
+
+	public void setOutpath(String outpath) {
+		this.outpath = outpath;
+	}
+
+	public int getMaxIterations() {
+		return maxIterations;
+	}
+
+	public void setMaxIterations(int maxIterations) {
+		this.maxIterations = maxIterations;
+	}
+
+	public int getClusterClassificationThreshold() {
+		return clusterClassificationThreshold;
+	}
+
+	public void setClusterClassificationThreshold(int clusterClassificationThreshold) {
+		this.clusterClassificationThreshold = clusterClassificationThreshold;
+	}
+
+	public int getClassification() {
+		return classification;
+	}
+
+	public void setClassification(int classification) {
+		this.classification = classification;
+	}
+    
 }
 
 
