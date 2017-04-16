@@ -16,7 +16,7 @@ public class KMeansManager {
         this.solver = solver ;
     }
     public void run(){
-        Path pathIn = getClusterIn(kmConf.getInpath())  ;
+//        Path pathIn = getClusterIn(kmConf.getInpath())  ;
 //        KMeansDriver.run();
     }
 
