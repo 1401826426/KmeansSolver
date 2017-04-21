@@ -1,6 +1,6 @@
 package ec.ecust.edu;
 
-import mahout.HdfsDAO;
+import ec.ecust.edu.mysql.MysqlClusterSolver;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.clustering.Cluster;
@@ -18,14 +18,14 @@ public class KMeansManager {
 
     private KmConf kmConf ;
     private ClusterSolver solver ;
-    private HdfsDAO hdfsDAO ;
+//    private HdfsDAO hdfsDAO ;
     private static final String DIRECTORY_CONTAINING_CONVERTED_INPUT = "data";
 
     public KMeansManager(KmConf kmConf , ClusterSolver solver){
         this.kmConf = kmConf ;
         this.solver = solver ;
-        Configuration conf = new Configuration() ;
-        hdfsDAO = new HdfsDAO(kmConf.getHdfs(),conf) ;
+//        Configuration conf = new Configuration() ;
+//        hdfsDAO = new HdfsDAO(kmConf.getHdfs(),conf) ;
     }
 
     public void run() throws InterruptedException, IOException, ClassNotFoundException {
