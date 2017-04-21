@@ -33,7 +33,8 @@ public class KMeansManager {
         Path clusterIn = getCLusterIn(seqIn , kmConf.getClassification()) ;
         KMeansDriver.run(seqIn , clusterIn , new Path(kmConf.getOutpath()) , 0.01 ,
                 kmConf.getMaxIterations() ,true ,
-                kmConf.getClusterClassificationThreshold() , false);
+                kmConf.getClusterClassificationThreshold() ,
+                false);
         List<Cluster> clusters = DisplayCluster.loadClustersWritable(new Path(kmConf.getOutpath()))  ;
         solver.solve(clusters);
     }
