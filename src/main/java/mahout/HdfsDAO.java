@@ -31,7 +31,7 @@ public class HdfsDAO {
         JobConf conf = config();
         HdfsDAO hdfs = new HdfsDAO(conf);
         hdfs.copyFile("datafile/item.csv", "/tmp/new");
-        hdfs.ls("/tmp/new");
+//        hdfs.ls("/tmp/new");
     }        
     
     public static JobConf config(){
@@ -61,18 +61,13 @@ public class HdfsDAO {
         fs.close();
     }
 
-    @SuppressWarnings("deprecation")
-	public void ls(String folder) throws IOException {
-        Path path = new Path(folder);
+	public FileStatus[] ls(Path path) throws IOException {
+
         FileSystem fs = FileSystem.get(URI.create(hdfsPath), conf);
         FileStatus[] list = fs.listStatus(path);
-        System.out.println("ls: " + folder);
-        System.out.println("==========================================================");
-        for (FileStatus f : list) {
-            System.out.printf("name: %s, folder: %s, size: %d\n", f.getPath(), f.isDir(), f.getLen());
-        }
-        System.out.println("==========================================================");
         fs.close();
+        return list ;
+
     }
 
     public void createFile(String file, String content) throws IOException {

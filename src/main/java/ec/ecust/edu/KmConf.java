@@ -22,7 +22,14 @@ public class KmConf {
     private int maxIterations  = 10 ;
     private int clusterClassificationThreshold = 10 ;
     private int classification = 10 ;
-    public KmConf(){
+    private boolean isNeedSeq = true ;
+    private String newFeaturePath = "/newFeatures" ;
+    private static KmConf kmConf = new KmConf() ;
+    public static KmConf getKmConf(){
+        return kmConf ;
+    }
+
+    private KmConf(){
         Properties p = new Properties() ;
         InputStream in = KmConf.class.getClassLoader().getResourceAsStream(PROPERTI_NAME) ;
         try {
@@ -44,6 +51,12 @@ public class KmConf {
             }
             if(p.containsKey("classification")){
                 classification = Integer.valueOf((String) p.get("classification"));
+            }
+            if(p.containsKey("isNeedSeq")){
+                isNeedSeq = Boolean.valueOf((String)p.get("isNeedSeq")) ;
+            }
+            if(p.containsKey("newFeaturePath")){
+                newFeaturePath = (String)p.getProperty("newFeaturePath") ;
             }
         } catch (IOException e) {
             e.printStackTrace();

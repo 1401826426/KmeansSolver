@@ -75,6 +75,7 @@ public class MysqlClusterReader extends MysqlBase {
     public static void main(String[] args){
         List<Cluster> clusters = new MysqlClusterReader().readAllFromMysql() ;
         for(Cluster cluster:clusters){
+//            cluster.pdf() ;
             log.info(cluster.asFormatString(null)) ;
         }
     }
