@@ -1,21 +1,15 @@
 package ec.ecust.edu;
 
 import ec.ecust.edu.mysql.MysqlClusterSolver;
-import mahout.HdfsDAO;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.clustering.Cluster;
 import org.apache.mahout.clustering.conversion.InputDriver;
 import org.apache.mahout.clustering.kmeans.KMeansDriver;
 import org.apache.mahout.clustering.kmeans.RandomSeedGenerator;
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List ;
 import java.io.IOException;
-import java.util.Map;
 import java.util.UUID;
 
 /**

@@ -34,36 +34,6 @@ public class InputDriverV2 {
     private InputDriverV2() {
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-        DefaultOptionBuilder obuilder = new DefaultOptionBuilder();
-        ArgumentBuilder abuilder = new ArgumentBuilder();
-        GroupBuilder gbuilder = new GroupBuilder();
-        Option inputOpt = DefaultOptionCreator.inputOption().withRequired(false).create();
-        Option outputOpt = DefaultOptionCreator.outputOption().withRequired(false).create();
-        Option vectorOpt = obuilder.withLongName("vector").withRequired(false).withArgument(abuilder.withName("v").withMinimum(1).withMaximum(1).create()).withDescription("The vector implementation to use.").withShortName("v").create();
-        Option helpOpt = DefaultOptionCreator.helpOption();
-        Group group = gbuilder.withName("Options").withOption(inputOpt).withOption(outputOpt).withOption(vectorOpt).withOption(helpOpt).create();
-
-        try {
-            Parser parser = new Parser();
-            parser.setGroup(group);
-            CommandLine cmdLine = parser.parse(args);
-            if(cmdLine.hasOption(helpOpt)) {
-                CommandLineUtil.printHelp(group);
-                return;
-            }
-
-            Path input = new Path(cmdLine.getValue(inputOpt, "testdata").toString());
-            Path output = new Path(cmdLine.getValue(outputOpt, "output").toString());
-            String vectorClassName = cmdLine.getValue(vectorOpt, "org.apache.mahout.math.RandomAccessSparseVector").toString();
-            runJob(input, output, vectorClassName);
-        } catch (OptionException var14) {
-            log.error("Exception parsing command line: ", var14);
-            CommandLineUtil.printHelp(group);
-        }
-
-    }
-
     public static void runJob(Path input, Path output, String vectorClassName) throws IOException, InterruptedException, ClassNotFoundException {
         Configuration conf = new Configuration();
         conf.set("vector.implementation.class.name", vectorClassName);
