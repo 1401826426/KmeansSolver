@@ -4,6 +4,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.PathFilter;
 import org.apache.mahout.clustering.AbstractCluster;
 import org.apache.mahout.clustering.Cluster;
 import org.apache.mahout.clustering.iterator.ClusterWritable;
@@ -24,12 +25,20 @@ public class DisplayCluster {
     private static final Logger log = LoggerFactory.getLogger(DisplayCluster.class) ;
     public static List<Cluster> loadClustersWritable(Path output) throws IOException {
         Configuration conf = new Configuration() ;
+        log.info("output:::" + output.toString());
         FileSystem fs = FileSystem.get(output.toUri() , conf) ;
         List<Cluster> clusters = new ArrayList<Cluster>() ;
-        for(FileStatus s:fs.listStatus(output , new ClusterFilter())){
+//        clusters.addAll(readClustersWritable(output)); 
+        for(FileStatus s:fs.listStatus(output , new PathFilter(){
+        	 public boolean accept(Path path) {
+        	        return path.getName().startsWith("part-r") ;
+        	    }
+        })){
+        	log.info(s.getPath().toUri().toString());
             List<Cluster> cs = readClustersWritable(s.getPath()) ;
             clusters.addAll(cs) ;
         }
+       
         return clusters ;
     }
 
@@ -45,6 +54,12 @@ public class DisplayCluster {
                     cluster.getNumObservations() ,
                     AbstractCluster.formatVector(cluster.getRadius() , null)
             ) ;
+//            log.info("Reading Cluster:{} numPoints {} radius{}" , 
+//            		cluster.getId(),
+//            		cluster.getNumObservations() ,
+//                    AbstractCluster.formatVector(cluster.getRadius() , null)
+//            		) ; 
+//            num++ ; 
             clusters.add(cluster) ;
         }
         return clusters ;

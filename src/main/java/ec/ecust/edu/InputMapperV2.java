@@ -29,8 +29,8 @@ public class InputMapperV2 extends Mapper<LongWritable, Text, Text, VectorWritab
     private static MysqlClusterSolver mysqlClusterSolver ;
     private static KmConf kmConf = KmConf.getKmConf() ;
 
-    public static void init() throws IOException {
-        clusters = DisplayCluster.loadClustersWritable(new Path(kmConf.getOutpath())) ;
+    public static void init(List<Cluster> clusters) throws IOException {
+        InputMapperV2.clusters = clusters;  
         mysqlClusterSolver = MysqlClusterSolver.getInstance() ;
     }
     public InputMapperV2() {

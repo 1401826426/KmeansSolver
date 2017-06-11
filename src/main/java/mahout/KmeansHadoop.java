@@ -29,7 +29,7 @@ public class KmeansHadoop {
         hdfs.rmr(inPath);
         hdfs.mkdirs(inPath);
         hdfs.copyFile(localFile, inPath);
-        hdfs.ls(inPath);
+//        hdfs.ls(inPath);
         Path seqFile = new Path(seqFilePath , DIRECTORY_CONTAINING_CONVERTED_INPUT) ; 
         InputDriver.runJob(new Path(inPath),seqFile,"org.apache.mahout.math.RandomAccessSparseVector");
         int k = 3;

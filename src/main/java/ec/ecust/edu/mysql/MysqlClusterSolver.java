@@ -33,7 +33,7 @@ public class MysqlClusterSolver extends MysqlBase implements ClusterSolver {
         try {
             Connection connection = getConnection() ;
             for(Cluster cluster:clusters){
-                String sql = "instert into cluster values(?,?)" ;
+                String sql = "insert into cluster values(?,?)" ;
                 PreparedStatement ps = connection.prepareStatement(sql) ;
                 String id = String.valueOf(cluster.getId());
                 ps.setString(1 , id);
@@ -42,6 +42,7 @@ public class MysqlClusterSolver extends MysqlBase implements ClusterSolver {
                 ps.setBinaryStream(2 , is , is.available());
                 ps.executeUpdate() ;
             }
+            connection.close();
         } catch (SQLException e) {
             log.error("connection连接出错");
             e.printStackTrace();
@@ -61,11 +62,12 @@ public class MysqlClusterSolver extends MysqlBase implements ClusterSolver {
 //            rs.next() ;
 //            rs.getString("cluster_id") ;
 
-            String sql = "instert into image_index values(?,?)" ;
+            String sql = "insert into image_index values(?,?)" ;
             PreparedStatement ps = connection.prepareStatement(sql) ;
             ps.setString(1 , id);
             ps.setInt(2 , clusterId);
             ps.executeUpdate() ;
+            connection.close();
         } catch (SQLException e) {
             log.error("connection连接出错");
             e.printStackTrace();

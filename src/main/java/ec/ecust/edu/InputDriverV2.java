@@ -73,7 +73,7 @@ public class InputDriverV2 {
         job.setOutputFormatClass(SequenceFileOutputFormat.class);
         job.setMapperClass(InputMapperV2.class);
         job.setNumReduceTasks(0);
-        job.setJarByClass(InputDriver.class);
+        job.setJarByClass(InputDriverV2.class);
         FileInputFormat.addInputPath(job, input);
         FileOutputFormat.setOutputPath(job, output);
         boolean succeeded = job.waitForCompletion(true);

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List ;
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by pengfei on 2017/4/13.
@@ -26,7 +27,7 @@ public class KMeansManager {
     private ClusterSolver solver ;
     private HdfsDAO hdfsDAO  ;
     private static final String DIRECTORY_CONTAINING_CONVERTED_INPUT = "data";
-
+    private static final String CLUSTERED_POINTS = "/clusters-1-final" ; 
     public KMeansManager(KmConf kmConf , ClusterSolver solver){
         this.kmConf = kmConf ;
         this.solver = solver ;
@@ -35,29 +36,36 @@ public class KMeansManager {
     }
 
     public void run() throws InterruptedException, IOException, ClassNotFoundException {
-        Path seqIn = getSeqIn(kmConf.getInpath() , kmConf.isNeedSeq())  ;
-        Path clusterIn = getCLusterIn(seqIn , kmConf.getClassification()) ;
-        KMeansDriver.run(seqIn , clusterIn , new Path(kmConf.getOutpath()) , 0.01 ,
-                kmConf.getMaxIterations() ,true ,
-                kmConf.getClusterClassificationThreshold() ,
-                false);
-
-        List<Cluster> clusters = DisplayCluster.loadClustersWritable(new Path(kmConf.getOutpath()))  ;
+    	if(kmConf.isNeedCluster()){
+	        Path seqIn = getSeqIn(kmConf.getInpath() , kmConf.isNeedSeq())  ;
+	        Path clusterIn = getCLusterIn(seqIn , kmConf.getClassification()) ;
+	        KMeansDriver.run(seqIn , clusterIn , new Path(kmConf.getOutpath()) , 0.01 ,
+	                kmConf.getMaxIterations() ,true ,
+	                kmConf.getClusterClassificationThreshold() ,
+	                false);
+    	}
+    	String s = kmConf.getOutpath() +  CLUSTERED_POINTS; 
+        List<Cluster> clusters = DisplayCluster.loadClustersWritable(new Path(s))  ;
         MysqlClusterSolver.getInstance().solve(clusters);
-        saveFeatureVector(kmConf.getInpath()) ;
+        saveFeatureVector(kmConf.getNewFeaturePath(),clusters) ;
     }
 
-    private void saveFeatureVector(String inPath ) throws IOException, ClassNotFoundException, InterruptedException {
+    private void saveFeatureVector(String inPath , List<Cluster> clusters) throws IOException, ClassNotFoundException, InterruptedException {
         String seqFilePath = inPath+"/seqfile";
-        Path seqFile = new Path(seqFilePath , DIRECTORY_CONTAINING_CONVERTED_INPUT+"2") ;  ;
-        InputMapperV2.init();
+        Path seqFile = new Path(seqFilePath , DIRECTORY_CONTAINING_CONVERTED_INPUT+UUID.randomUUID().toString()) ;  ;
+        InputMapperV2.init(clusters);
         InputDriverV2.runJob(new Path(inPath),seqFile,"org.apache.mahout.math.RandomAccessSparseVector");
     }
 
     private Path getCLusterIn(Path seqIn, int classification) throws IOException {
-        Path clustersSeeds = new Path(seqIn.getParent() , "/seeds");
-        clustersSeeds = RandomSeedGenerator.buildRandom(new Configuration(),seqIn,
-                clustersSeeds, classification, new EuclideanDistanceMeasure());
+    	Path clustersSeeds = null ; 
+    	if(kmConf.isNeedClusterIn()){
+		    clustersSeeds = new Path(seqIn.getParent() , "/seeds");
+		    clustersSeeds = RandomSeedGenerator.buildRandom(new Configuration(),seqIn,
+		            clustersSeeds, classification, new EuclideanDistanceMeasure());
+    	}else{
+    		clustersSeeds = new Path(kmConf.getClusterPath()) ; 
+    	}
         return clustersSeeds ;
     }
 

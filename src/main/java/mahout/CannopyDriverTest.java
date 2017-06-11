@@ -35,7 +35,7 @@ public class CannopyDriverTest {
 //            clusterDumper.printClusters(null);
     	JobConf conf = new JobConf() ;
         HdfsDAO hdfsDAO = new HdfsDAO(HDFS , conf) ;
-        hdfsDAO.ls(inPath);
+//        hdfsDAO.ls(inPath);
         hdfsDAO.rmr(inPath);
         hdfsDAO.mkdirs(inPath);
         hdfsDAO.copyFile(localFile , inPath);
